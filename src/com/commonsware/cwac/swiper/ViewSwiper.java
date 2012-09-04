@@ -15,6 +15,8 @@
    
 package com.commonsware.cwac.swiper;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
@@ -24,7 +26,7 @@ import android.gesture.Prediction;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ViewFlipper;
-import java.util.ArrayList;
+
 import com.commonsware.cwac.parcel.ParcelHelper;
 
 public class ViewSwiper extends GestureOverlayView
@@ -54,6 +56,16 @@ public class ViewSwiper extends GestureOverlayView
                                                     parcel.getIdentifier("gestures",
                                                                          "raw"));
     gestureLibrary.load();    
+  }
+  
+  public void setRightAnimation(){
+	  flipper.setInAnimation(getContext(), R.animator.push_right_in);
+	  flipper.setOutAnimation(getContext(), R.animator.push_right_out);
+  }
+  
+  public void setLeftAnimation(){
+	  flipper.setInAnimation(getContext(), R.animator.push_left_in);
+	  flipper.setOutAnimation(getContext(), R.animator.push_left_out);
   }
   
   @Override
@@ -97,10 +109,12 @@ public class ViewSwiper extends GestureOverlayView
   }
   
   protected void moveToNext() {
+	  this.setLeftAnimation();
     flipper.showNext();
   }
   
   protected void moveToPrevious() {
+	  this.setRightAnimation();
     flipper.showPrevious();
   }
 }
